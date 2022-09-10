@@ -1,16 +1,9 @@
 package br.com.sharetips.entities;
 
 import java.io.Serializable;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name="tips") // Dicas
@@ -22,17 +15,23 @@ public class Tip implements Serializable{
 	private Long id;
 	private String title;
 	private String content;
+	@ManyToOne()
+	@JoinColumn(name = "id_user")
 	private User author;
-	private Set<Subject> subjects = new HashSet<>();
+
+	@Column(name="created_at")
+	private Date createdAt;
+//	private Set<Subject> subjects = new HashSet<>();
 	
 	public Tip() {}
 
-	public Tip(Long id, String title, String content, User author) {
+	public Tip(Long id, String title, String content, User author, Date createdAt) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.content = content;
 		this.author = author;
+		this.createdAt = createdAt;
 	}
 
 	public Long getId() {
@@ -66,16 +65,24 @@ public class Tip implements Serializable{
 	public void setAuthor(User author) {
 		this.author = author;
 	}
-	
-	public Set<Subject> getSubjects() {
-		return Collections.unmodifiableSet(subjects);
+
+	public Date getCreatedAt() {
+		return createdAt;
 	}
-	
-	public Tip addSubject(Subject subject) {
-		this.subjects.add(subject);
-		
-		return this;
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
 	}
+
+	//	public Set<Subject> getSubjects() {
+//		return Collections.unmodifiableSet(subjects);
+//	}
+//
+//	public Tip addSubject(Subject subject) {
+//		this.subjects.add(subject);
+//
+//		return this;
+//	}
 	
 	@Override
 	public int hashCode() {

@@ -22,10 +22,17 @@ public class UserService {
 	public User findById(Long id) {
 		Optional<User> obj = repository.findById(id);
 		
-		return obj.orElseThrow(() -> new ObjectNotFoundException("User not found!"));
+		return obj.orElseThrow(() ->
+				new ObjectNotFoundException("User not found!")
+		);
 	}
 	
 	public User save(User obj) {
 		return repository.save(obj);
+	}
+
+	public void deleteById(Long id) {
+		findById(id);
+		repository.deleteById(id);
 	}
 }
