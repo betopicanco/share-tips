@@ -14,19 +14,12 @@ import br.com.sharetips.services.UserService;
 public class UserController {
 	@Autowired
 	private UserService service;
-	
-//	@GetMapping("/")
-//	public String helloWorld() {
-//		return "Hello world";
-//	}
-	
 	@GetMapping("/")
 	public ResponseEntity<List<User>> findAll() {
 		List<User> list = service.findAll();
 		
 		return ResponseEntity.ok().body(list);
 	}
-
 	@GetMapping("/{id}")
 	public ResponseEntity<User> findById(@PathVariable Long id) {
 		User obj = service.findById(id);

@@ -15,23 +15,23 @@ public class Tip implements Serializable{
 	private Long id;
 	private String title;
 	private String content;
+	@Column(name="created_at")
+	private Date createdAt;
 	@ManyToOne()
 	@JoinColumn(name = "id_user")
 	private User author;
 
-	@Column(name="created_at")
-	private Date createdAt;
-//	private Set<Subject> subjects = new HashSet<>();
-	
+
+
 	public Tip() {}
 
-	public Tip(Long id, String title, String content, User author, Date createdAt) {
+	public Tip(Long id, String title, String content, Date createdAt, User author) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.content = content;
-		this.author = author;
 		this.createdAt = createdAt;
+		this.author = author;
 	}
 
 	public Long getId() {
@@ -73,16 +73,6 @@ public class Tip implements Serializable{
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
-
-	//	public Set<Subject> getSubjects() {
-//		return Collections.unmodifiableSet(subjects);
-//	}
-//
-//	public Tip addSubject(Subject subject) {
-//		this.subjects.add(subject);
-//
-//		return this;
-//	}
 	
 	@Override
 	public int hashCode() {
