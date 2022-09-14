@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import br.com.sharetips.entities.dto.LoginUserDTO;
+import br.com.sharetips.services.exceptions.DatabaseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,11 +30,19 @@ public class UserService {
 	}
 	
 	public User save(User obj) {
-		return repository.save(obj);
+		Optional<User> exists = repository.findByEmail(obj.getEmail());
+
+		if(exists.isPresent()) {
+			throw new DatabaseException("Email already exists");
+		} else {
+			return repository.save(obj);
+		}
 	}
 
-	public User login(LoginUserDTO dto) {
-		return repository.findByEmailAndPassword(dto.getEmail(), dto.getPassword());
+	public Optional<User> login(LoginUserDTO dto) {
+		Optional<User> user = repository.findByEmailAndPassword(dto.getEmail(), dto.getPassword());
+
+		return user;
 	}
 
 	public void deleteById(Long id) {

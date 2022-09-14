@@ -1,6 +1,7 @@
 package br.com.sharetips.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import br.com.sharetips.entities.dto.LoginUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,21 +28,18 @@ public class UserController {
 
 		return ResponseEntity.ok().body(obj);
 	}
-
 	@GetMapping("/login")
-	public ResponseEntity<User> login(@RequestBody LoginUserDTO dto) {
-		User obj = service.login(dto);
+	public ResponseEntity<Optional<User>> login(@RequestBody LoginUserDTO dto) {
+		Optional<User> obj = service.login(dto);
 
 		return ResponseEntity.ok().body(obj);
 	}
-	
 	@PostMapping("/")
 	public ResponseEntity<Void> insert(@RequestBody User obj) {
 		service.save(obj);
 		
 		return ResponseEntity.ok().body(null);
 	}
-
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 		service.deleteById(id);
