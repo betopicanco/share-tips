@@ -19,9 +19,6 @@ public class TipController {
     @Autowired
     private TipService service;
 
-    @Autowired
-    private UserService userService;
-
     @GetMapping("/")
     private ResponseEntity<List<Tip>> findAll() {
         List<Tip> list = service.findAll();

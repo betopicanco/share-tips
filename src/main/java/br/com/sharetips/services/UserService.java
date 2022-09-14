@@ -3,6 +3,7 @@ package br.com.sharetips.services;
 import java.util.List;
 import java.util.Optional;
 
+import br.com.sharetips.entities.dto.LoginUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,10 @@ public class UserService {
 	
 	public User save(User obj) {
 		return repository.save(obj);
+	}
+
+	public User login(LoginUserDTO dto) {
+		return repository.findByEmailAndPassword(dto.getEmail(), dto.getPassword());
 	}
 
 	public void deleteById(Long id) {
