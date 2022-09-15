@@ -41,4 +41,9 @@ public class TipService {
 
         return repository.save(tip);
     }
+
+    public void deleteById(Long id) {
+        findById(id);
+        repository.deleteById(id);
+    }
 }

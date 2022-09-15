@@ -39,4 +39,11 @@ public class TipController {
 
         return ResponseEntity.ok().body(tip);
     }
+
+    @DeleteMapping("/{id}")
+    private ResponseEntity<Void> delete(@PathVariable Long id) {
+        service.deleteById(id);
+
+        return ResponseEntity.ok().body(null);
+    }
 }

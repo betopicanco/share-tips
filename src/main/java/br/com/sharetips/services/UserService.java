@@ -37,10 +37,10 @@ public class UserService {
 		}
 	}
 
-	public Optional<User> login(LoginUserDTO dto) {
+	public User login(LoginUserDTO dto) {
 		Optional<User> user = repository.findByEmailAndPassword(dto.getEmail(), dto.getPassword());
 
-		return user;
+		return user.orElseThrow(() -> new ResourceNotFoundException("Email ou senha incorretos"));
 	}
 
 	public void deleteById(Long id) {
