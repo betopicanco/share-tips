@@ -34,8 +34,8 @@ public class TipController {
     }
 
     @PostMapping("/")
-    private ResponseEntity<Tip> insert(@RequestBody InsertTipDTO obj) {
-        Tip tip = service.insertFromDTO(obj);
+    private ResponseEntity<Tip> insert(@RequestBody InsertTipDTO dto) {
+        Tip tip = service.save(dto);
 
         return ResponseEntity.ok().body(tip);
     }
@@ -45,5 +45,12 @@ public class TipController {
         service.deleteById(id);
 
         return ResponseEntity.ok().body(null);
+    }
+
+    @PutMapping("/{id}")
+    private ResponseEntity<Tip> update(@PathVariable Long id, @RequestBody InsertTipDTO dto) {
+        Tip tip = service.update(id, dto);
+
+        return ResponseEntity.ok().body(tip);
     }
 }

@@ -31,19 +31,29 @@ public class TipService {
         return obj.orElseThrow(() -> new ResourceNotFoundException("Tip not found"));
     }
 
-    public Tip insert(Tip obj) {
-        return repository.save(obj);
+    public Tip save(InsertTipDTO dto) {
+        return repository.save(fromDTO(dto));
     }
 
-    public Tip insertFromDTO(InsertTipDTO obj) {
-        User author = userRepository.findById(obj.getAuthorId()).get();
-        Tip tip = obj.toTip(author);
+    public Tip fromDTO(InsertTipDTO dto) {
+        User author = userRepository.findById(dto.getAuthorId()).get();
 
-        return repository.save(tip);
+        return dto.toTip(author);
     }
 
     public void deleteById(Long id) {
         findById(id);
         repository.deleteById(id);
+    }
+
+    public Tip update(Long id, InsertTipDTO dto) {
+        Tip tip = findById(id);
+        Tip obj = fromDTO(dto);
+
+        tip.setTitle(obj.getTitle());
+        tip.setContent(obj.getContent());
+        tip.setAuthor(obj.getAuthor());
+
+        return repository.save(tip);
     }
 }
