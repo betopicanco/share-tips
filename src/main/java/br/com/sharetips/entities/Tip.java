@@ -21,6 +21,12 @@ public class Tip implements Serializable{
 	@JoinColumn(name = "id_user")
 	private User author;
 
+	@ManyToMany
+	@JoinTable(
+			name = "tb_tip_subject",
+			joinColumns = @JoinColumn(name = "tip_id"),
+			inverseJoinColumns = @JoinColumn(name = "subject_id"))
+	private Set<Subject> subjects = new HashSet<>();
 
 
 	public Tip() {}
@@ -72,6 +78,14 @@ public class Tip implements Serializable{
 
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
+	}
+
+	public Set<Subject> getSubjects() {
+		return subjects;
+	}
+
+	public void addSubject(Subject subject) {
+		subjects.add(subject);
 	}
 	
 	@Override

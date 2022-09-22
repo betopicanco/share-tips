@@ -1,16 +1,15 @@
 package br.com.sharetips.controllers;
 
+import br.com.sharetips.entities.Subject;
 import br.com.sharetips.entities.Tip;
-import br.com.sharetips.entities.User;
-import br.com.sharetips.entities.dto.InsertTipDTO;
+import br.com.sharetips.entities.dto.SubjectDTO;
+import br.com.sharetips.entities.dto.TipDTO;
 import br.com.sharetips.services.TipService;
-import br.com.sharetips.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -34,7 +33,7 @@ public class TipController {
     }
 
     @PostMapping("/")
-    private ResponseEntity<Tip> insert(@RequestBody InsertTipDTO dto) {
+    private ResponseEntity<Tip> insert(@RequestBody TipDTO dto) {
         Tip tip = service.save(dto);
 
         return ResponseEntity.ok().body(tip);
@@ -48,8 +47,15 @@ public class TipController {
     }
 
     @PutMapping("/{id}")
-    private ResponseEntity<Tip> update(@PathVariable Long id, @RequestBody InsertTipDTO dto) {
+    private ResponseEntity<Tip> update(@PathVariable Long id, @RequestBody TipDTO dto) {
         Tip tip = service.update(id, dto);
+
+        return ResponseEntity.ok().body(tip);
+    }
+
+    @PutMapping("/{id}/add-subject")
+    private ResponseEntity<Tip> addSubject(@PathVariable Long id, @RequestBody SubjectDTO subjectDTO) {
+        Tip tip = service.addSubject(id, subjectDTO);
 
         return ResponseEntity.ok().body(tip);
     }

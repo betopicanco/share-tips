@@ -5,14 +5,14 @@ import br.com.sharetips.entities.User;
 
 import java.util.Date;
 
-public class InsertTipDTO {
+public class TipDTO {
     private Long authorId;
     private String title;
     private String content;
 
-    public InsertTipDTO() { }
+    public TipDTO() { }
 
-    public InsertTipDTO(Long authorId, String title, String content) {
+    public TipDTO(Long authorId, String title, String content) {
         this.authorId = authorId;
         this.title = title;
         this.content = content;
@@ -43,8 +43,6 @@ public class InsertTipDTO {
     }
 
     public Tip toTip(User author) {
-        Tip tip = new Tip(null, getTitle(), getContent(), new Date(), author);
-
-        return tip;
+        return new Tip(null, getTitle(), getContent(), new Date(), author);
     }
 }
