@@ -71,7 +71,6 @@ public class TipService {
             tip.addSubject(subject.get());
         } else {
             Subject newSubject = subjectRepository.save(subjectDTO.toSubject());
-
             tip.addSubject(newSubject);
         }
 
