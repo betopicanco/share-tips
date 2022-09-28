@@ -10,8 +10,7 @@ import br.com.sharetips.entities.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>{
-	public List<User> findAll();
-
-	public Optional<User> findByEmail(String email);
-	public Optional<User> findByEmailAndPassword(String email, String password);
+	List<User> findAll();
+	Optional<User> findByEmail(String email);
+	Optional<User> findByEmailAndPassword(String email, String password);
 }

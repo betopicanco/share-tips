@@ -1,9 +1,8 @@
 package br.com.sharetips.controllers;
 
 import java.util.List;
-import java.util.Optional;
 
-import br.com.sharetips.entities.dto.LoginUserDTO;
+import br.com.sharetips.entities.dto.user.UserLoginRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +28,7 @@ public class UserController {
 		return ResponseEntity.ok().body(obj);
 	}
 	@GetMapping("/login")
-	public ResponseEntity<User> login(@RequestBody LoginUserDTO dto) {
+	public ResponseEntity<User> login(@RequestBody UserLoginRequestDTO dto) {
 		User obj = service.login(dto);
 
 		return ResponseEntity.ok().body(obj);

@@ -1,9 +1,8 @@
 package br.com.sharetips.controllers;
 
-import br.com.sharetips.entities.Subject;
 import br.com.sharetips.entities.Tip;
-import br.com.sharetips.entities.dto.SubjectDTO;
-import br.com.sharetips.entities.dto.TipDTO;
+import br.com.sharetips.entities.dto.subject.SubjectDTO;
+import br.com.sharetips.entities.dto.tip.TipDTO;
 import br.com.sharetips.services.TipService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

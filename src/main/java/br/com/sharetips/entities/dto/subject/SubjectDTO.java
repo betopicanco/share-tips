@@ -1,4 +1,4 @@
-package br.com.sharetips.entities.dto;
+package br.com.sharetips.entities.dto.subject;
 
 import br.com.sharetips.entities.Subject;
 
