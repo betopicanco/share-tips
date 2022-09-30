@@ -2,6 +2,7 @@ package br.com.sharetips.mappers;
 
 import br.com.sharetips.entities.User;
 import br.com.sharetips.entities.dto.user.UserLoginRequestDTO;
+import br.com.sharetips.entities.dto.user.UserRegisterRequestDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -10,4 +11,6 @@ public abstract class UserMapper {
     public static final UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
     public abstract User toUser(UserLoginRequestDTO userLoginRequestDTO);
+
+    public abstract User toUser(UserRegisterRequestDTO userRegisterRequestDTO);
 }

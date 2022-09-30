@@ -4,7 +4,7 @@ import br.com.sharetips.entities.Subject;
 import br.com.sharetips.entities.Tip;
 import br.com.sharetips.entities.User;
 import br.com.sharetips.entities.dto.subject.SubjectDTO;
-import br.com.sharetips.entities.dto.tip.TipDTO;
+import br.com.sharetips.entities.dto.tip.TipCreateDTO;
 import br.com.sharetips.exceptions.ResourceNotFoundException;
 import br.com.sharetips.repositories.SubjectRepository;
 import br.com.sharetips.repositories.TipRepository;
@@ -36,11 +36,11 @@ public class TipService {
         return obj.orElseThrow(() -> new ResourceNotFoundException("Tip not found"));
     }
 
-    public Tip save(TipDTO dto) {
+    public Tip save(TipCreateDTO dto) {
         return repository.save(fromDTO(dto));
     }
 
-    public Tip fromDTO(TipDTO dto) {
+    public Tip fromDTO(TipCreateDTO dto) {
         User author = userRepository.findById(dto.getAuthorId()).get();
 
         return dto.toTip(author);
@@ -51,7 +51,7 @@ public class TipService {
         repository.deleteById(id);
     }
 
-    public Tip update(Long id, TipDTO dto) {
+    public Tip update(Long id, TipCreateDTO dto) {
         Tip tip = findById(id);
         Tip obj = fromDTO(dto);
 
