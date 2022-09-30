@@ -3,12 +3,15 @@ package br.com.sharetips.controllers;
 import java.util.List;
 
 import br.com.sharetips.entities.dto.user.UserLoginRequestDTO;
+import br.com.sharetips.entities.dto.user.UserRegisterRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import br.com.sharetips.entities.User;
 import br.com.sharetips.services.UserService;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/users")
@@ -34,8 +37,8 @@ public class UserController {
 		return ResponseEntity.ok().body(obj);
 	}
 	@PostMapping("/")
-	public ResponseEntity<User> insert(@RequestBody User obj) {
-		User user = service.save(obj);
+	public ResponseEntity<User> insert(@RequestBody @Valid UserRegisterRequestDTO dto) {
+		User user = service.register(dto);
 		
 		return ResponseEntity.ok().body(user);
 	}
