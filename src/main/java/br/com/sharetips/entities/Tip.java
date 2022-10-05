@@ -32,7 +32,7 @@ public class Tip implements Serializable{
 	private Set<Subject> subjects = new HashSet<>();
 
 
-	public Tip() {}
+	public Tip() { }
 
 	public Tip(Long id, String title, String content, Date createdAt, User author) {
 		this.id = id;

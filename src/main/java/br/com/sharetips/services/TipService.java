@@ -26,6 +26,9 @@ public class TipService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private UserService userService;
+
     public List<Tip> findAll() {
         return repository.findAll();
     }
@@ -74,5 +77,12 @@ public class TipService {
         }
 
         return repository.save(tip);
+    }
+
+    public List<Tip> findByAuthor(Long userId) {
+        User author = userService.findById(userId);
+        List<Tip> list = repository.findByAuthor(author);
+
+        return list;
     }
 }

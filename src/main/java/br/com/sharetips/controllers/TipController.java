@@ -25,6 +25,13 @@ public class TipController {
         return ResponseEntity.ok().body(list);
     }
 
+    @GetMapping("/find-by-author/{userId}")
+    private ResponseEntity<List<Tip>> findByAuthor(@PathVariable Long userId) {
+        List<Tip> list = service.findByAuthor(userId);
+
+        return ResponseEntity.ok().body(list);
+    }
+
     @GetMapping("/{id}")
     private ResponseEntity<Tip> findById(@PathVariable Long id) {
         Tip obj = service.findById(id);
