@@ -1,6 +1,7 @@
 package br.com.sharetips.mappers;
 
 import br.com.sharetips.entities.User;
+import br.com.sharetips.entities.dto.user.UserAuthorDTO;
 import br.com.sharetips.entities.dto.user.UserLoginRequestDTO;
 import br.com.sharetips.entities.dto.user.UserRegisterRequestDTO;
 import org.mapstruct.Mapper;
@@ -13,4 +14,6 @@ public abstract class UserMapper {
     public abstract User toUser(UserLoginRequestDTO userLoginRequestDTO);
 
     public abstract User toUser(UserRegisterRequestDTO userRegisterRequestDTO);
+
+    public abstract User toUser(UserAuthorDTO userAuthorDTO);
 }
