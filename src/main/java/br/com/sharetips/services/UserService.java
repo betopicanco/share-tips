@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import br.com.sharetips.entities.Tip;
+import br.com.sharetips.entities.dto.user.UserLoggedDTO;
 import br.com.sharetips.entities.dto.user.UserLoginRequestDTO;
 import br.com.sharetips.entities.dto.user.UserRegisterRequestDTO;
 import br.com.sharetips.exceptions.BadRequestException;
@@ -46,8 +47,8 @@ public class UserService {
 		}
 	}
 
-	public User login(UserLoginRequestDTO dto) {
-		Optional<User> user = repository.findByEmailAndPassword(dto.getEmail(), dto.getPassword());
+	public UserLoggedDTO login(UserLoginRequestDTO dto) {
+		Optional<UserLoggedDTO> user = repository.findByEmailAndPassword(dto.getEmail(), dto.getPassword());
 
 
 		return user.orElseThrow(() -> new BadRequestException("Email ou senha incorretos"));

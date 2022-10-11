@@ -5,6 +5,7 @@ import br.com.sharetips.entities.Tip;
 import br.com.sharetips.entities.User;
 import br.com.sharetips.entities.dto.subject.SubjectDTO;
 import br.com.sharetips.entities.dto.tip.TipCreateDTO;
+import br.com.sharetips.entities.dto.tip.TipFeedDTO;
 import br.com.sharetips.exceptions.ResourceNotFoundException;
 import br.com.sharetips.repositories.SubjectRepository;
 import br.com.sharetips.repositories.TipRepository;
@@ -82,6 +83,12 @@ public class TipService {
     public List<Tip> findByAuthor(Long userId) {
         User author = userService.findById(userId);
         List<Tip> list = repository.findByAuthor(author);
+
+        return list;
+    }
+
+    public List<TipFeedDTO> findFeedByUser() {
+        List<TipFeedDTO> list = repository.findByTitle("titulo");
 
         return list;
     }

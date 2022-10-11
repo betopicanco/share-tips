@@ -3,6 +3,7 @@ package br.com.sharetips.controllers;
 import br.com.sharetips.entities.Tip;
 import br.com.sharetips.entities.dto.subject.SubjectDTO;
 import br.com.sharetips.entities.dto.tip.TipCreateDTO;
+import br.com.sharetips.entities.dto.tip.TipFeedDTO;
 import br.com.sharetips.services.TipService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,13 @@ public class TipController {
     @GetMapping("/")
     private ResponseEntity<List<Tip>> findAll() {
         List<Tip> list = service.findAll();
+
+        return ResponseEntity.ok().body(list);
+    }
+
+    @GetMapping("/feed")
+    private ResponseEntity<List<TipFeedDTO>> findFeedByUser() {
+        List<TipFeedDTO> list = service.findFeedByUser();
 
         return ResponseEntity.ok().body(list);
     }
