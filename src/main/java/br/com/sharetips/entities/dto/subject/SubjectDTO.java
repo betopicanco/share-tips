@@ -1,25 +1,14 @@
 package br.com.sharetips.entities.dto.subject;
 
 import br.com.sharetips.entities.Subject;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
+import javax.validation.constraints.NotEmpty;
+
+@Data
+@AllArgsConstructor
 public class SubjectDTO {
+    @NotEmpty
     private String name;
-
-    public SubjectDTO() {}
-
-    public SubjectDTO(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Subject toSubject() {
-        return new Subject(null, getName());
-    }
 }

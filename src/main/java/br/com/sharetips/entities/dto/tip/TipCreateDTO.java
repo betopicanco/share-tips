@@ -11,7 +11,6 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 public class TipCreateDTO {
-    @NotEmpty
     private Long authorId;
     @NotEmpty
     private String title;
