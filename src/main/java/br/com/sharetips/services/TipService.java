@@ -79,8 +79,8 @@ public class TipService {
         return repository.save(tip);
     }
 
-    public List<Tip> findByAuthor(Long userId) {
-        User author = userService.findById(userId);
+    public List<Tip> findByAuthor(Long authorId) {
+        User author = userService.findById(authorId);
 
         return repository.findByAuthor(author);
     }

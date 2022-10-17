@@ -23,7 +23,7 @@ public class UserService {
 	private UserRepository repository;
 
 	@Autowired
-	private TipRepository tipRepository;
+	private TipService tipService;
 	
 	public List<User> findAll() {
 		return repository.findAll();
@@ -55,14 +55,14 @@ public class UserService {
 	}
 
 	public void deleteById(Long id) {
-		User user = findById(id);
-		List<Tip> tips = tipRepository.findByAuthor(user);
+		List<Tip> tips = tipService.findByAuthor(id);
 
 		if(tips.isEmpty()) {
 			repository.deleteById(id);
 		}
 	}
 
+	// TODO review endpoint
 	public User update(Long id, User obj) {
 		User entity = repository.getById(id);
 
