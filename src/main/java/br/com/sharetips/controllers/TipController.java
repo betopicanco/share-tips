@@ -49,6 +49,13 @@ public class TipController {
         return ResponseEntity.ok().body(list);
     }
 
+    @GetMapping("/find-by-subject")
+    private ResponseEntity<List<Tip>> findBySubjects(@RequestBody SubjectDTO subjectDTO) {
+        List<Tip> list = service.findBySubjects(subjectDTO);
+
+        return ResponseEntity.ok().body(list);
+    }
+
     @GetMapping("/{id}")
     private ResponseEntity<Tip> findById(@PathVariable Long id) {
         Tip obj = service.findById(id);

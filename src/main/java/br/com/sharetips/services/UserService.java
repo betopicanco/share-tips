@@ -23,7 +23,7 @@ public class UserService {
 	private UserRepository repository;
 
 	@Autowired
-	private TipService tipService;
+	private TipRepository tipRepository;
 	
 	public List<User> findAll() {
 		return repository.findAll();
@@ -55,7 +55,8 @@ public class UserService {
 	}
 
 	public void deleteById(Long id) {
-		List<Tip> tips = tipService.findByAuthor(id);
+		User author = findById(id);
+		List<Tip> tips = tipRepository.findByAuthor(author);
 
 		if(tips.isEmpty()) {
 			repository.deleteById(id);

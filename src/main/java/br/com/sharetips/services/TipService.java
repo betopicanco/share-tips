@@ -8,10 +8,8 @@ import br.com.sharetips.entities.dto.tip.TipCreateDTO;
 import br.com.sharetips.entities.dto.tip.TipFeedDTO;
 import br.com.sharetips.exceptions.ResourceNotFoundException;
 import br.com.sharetips.mappers.SubjectMapper;
-import br.com.sharetips.repositories.SubjectRepository;
 import br.com.sharetips.repositories.TipRepository;
 import br.com.sharetips.repositories.UserRepository;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +23,9 @@ public class TipService {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private SubjectService subjectService;
@@ -44,7 +45,7 @@ public class TipService {
     }
 
     public Tip fromDTO(TipCreateDTO dto) {
-        User author = userService.findById(dto.getAuthorId());
+        User author = findAuthorById(dto.getAuthorId());
 
         return dto.toTip(author);
     }
@@ -80,7 +81,7 @@ public class TipService {
     }
 
     public List<Tip> findByAuthor(Long authorId) {
-        User author = userService.findById(authorId);
+        User author = findAuthorById(authorId);
 
         return repository.findByAuthor(author);
     }
@@ -127,9 +128,15 @@ public class TipService {
         return repository.findByContentLike(content);
     }
 
-    public List<Tip> findBySubjectNameLike(String name) {
-        List<Subject> subjects = subjectService.findByNameLike(name);
+    public List<Tip> findBySubjectNameLike(String subjectName) {
+        List<Tip> tips = repository.findBySubjectNameLike(subjectName);
 
-        return repository.findBySubjectsIn(subjects);
+        return tips;
+    }
+
+    public List<Tip> findBySubjects(SubjectDTO subjectDTO) {
+        List<Tip> tips = repository.findBySubjects(subjectDTO);
+
+        return tips;
     }
 }
