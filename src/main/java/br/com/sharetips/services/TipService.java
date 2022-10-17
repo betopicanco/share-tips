@@ -7,7 +7,6 @@ import br.com.sharetips.entities.dto.subject.SubjectDTO;
 import br.com.sharetips.entities.dto.tip.TipCreateDTO;
 import br.com.sharetips.entities.dto.tip.TipFeedDTO;
 import br.com.sharetips.exceptions.ResourceNotFoundException;
-import br.com.sharetips.repositories.SubjectRepository;
 import br.com.sharetips.repositories.TipRepository;
 import br.com.sharetips.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +21,7 @@ public class TipService {
     private TipRepository repository;
 
     @Autowired
-    private SubjectRepository subjectRepository;
-
-    @Autowired
-    private UserRepository userRepository;
+    private SubjectService subjectService;
 
     @Autowired
     private UserService userService;
@@ -45,7 +41,7 @@ public class TipService {
     }
 
     public Tip fromDTO(TipCreateDTO dto) {
-        User author = userRepository.findById(dto.getAuthorId()).get();
+        User author = userService.findById(dto.getAuthorId());
 
         return dto.toTip(author);
     }
@@ -68,12 +64,12 @@ public class TipService {
 
     public Tip addSubject(Long id, SubjectDTO subjectDTO) {
         Tip tip = findById(id);
-        Optional<Subject> subject = subjectRepository.findByName(subjectDTO.getName());
+        Optional<Subject> subject = subjectService.findByName(subjectDTO.getName());
 
         if(subject.isPresent()) {
             tip.addSubject(subject.get());
         } else {
-            Subject newSubject = subjectRepository.save(subjectDTO.toSubject());
+            Subject newSubject = subjectService.saveToDTO(subjectDTO);
             tip.addSubject(newSubject);
         }
 

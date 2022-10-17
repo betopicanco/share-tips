@@ -7,5 +7,4 @@ import org.mapstruct.factory.Mappers;
 public abstract class  TipMapper {
     public static final TipMapper INSTANCE = Mappers.getMapper(TipMapper.class);
 
-
 }
