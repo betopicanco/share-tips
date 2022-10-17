@@ -33,6 +33,15 @@ public class TipController {
         return ResponseEntity.ok().body(list);
     }
 
+    @GetMapping("/search")
+    private ResponseEntity<List<Tip>> findByParamAndTerm(
+            @RequestParam String param,
+            @RequestParam String term) {
+        List<Tip> list = service.findByParamAndTerm(param, term);
+
+        return ResponseEntity.ok().body(list);
+    }
+
     @GetMapping("/find-by-author/{userId}")
     private ResponseEntity<List<Tip>> findByAuthor(@PathVariable Long userId) {
         List<Tip> list = service.findByAuthor(userId);
@@ -47,6 +56,7 @@ public class TipController {
         return ResponseEntity.ok().body(obj);
     }
 
+    // TODO check endpoint
     @PostMapping("/")
     private ResponseEntity<Tip> insert(@RequestBody @Valid TipCreateDTO dto) {
         Tip tip = service.save(dto);
@@ -68,7 +78,7 @@ public class TipController {
         return ResponseEntity.ok().body(tip);
     }
 
-    @PutMapping("/add-subject/{id}")
+    @PutMapping("/{id}/add-subject")
     private ResponseEntity<Tip> addSubject(@PathVariable Long id, @RequestBody @Valid SubjectDTO subjectDTO) {
         Tip tip = service.addSubject(id, subjectDTO);
 

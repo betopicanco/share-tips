@@ -7,8 +7,11 @@ import br.com.sharetips.entities.dto.subject.SubjectDTO;
 import br.com.sharetips.entities.dto.tip.TipCreateDTO;
 import br.com.sharetips.entities.dto.tip.TipFeedDTO;
 import br.com.sharetips.exceptions.ResourceNotFoundException;
+import br.com.sharetips.mappers.SubjectMapper;
+import br.com.sharetips.repositories.SubjectRepository;
 import br.com.sharetips.repositories.TipRepository;
 import br.com.sharetips.repositories.UserRepository;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,10 +24,10 @@ public class TipService {
     private TipRepository repository;
 
     @Autowired
-    private SubjectService subjectService;
+    private UserService userService;
 
     @Autowired
-    private UserService userService;
+    private SubjectService subjectService;
 
     public List<Tip> findAll() {
         return repository.findAll();
@@ -69,7 +72,7 @@ public class TipService {
         if(subject.isPresent()) {
             tip.addSubject(subject.get());
         } else {
-            Subject newSubject = subjectService.saveToDTO(subjectDTO);
+            Subject newSubject = subjectService.save(SubjectMapper.INSTANCE.toSubject(subjectDTO));
             tip.addSubject(newSubject);
         }
 
@@ -78,14 +81,55 @@ public class TipService {
 
     public List<Tip> findByAuthor(Long userId) {
         User author = userService.findById(userId);
-        List<Tip> list = repository.findByAuthor(author);
+
+        return repository.findByAuthor(author);
+    }
+
+    public List<TipFeedDTO> findFeedByUser() {
+        return repository.findByTitle("titulo");
+    }
+
+    public List<Tip> findByParamAndTerm(String param, String term) {
+        List<Tip> list;
+        term = "%" + term + "%";
+
+        switch (param) {
+            case "author":
+                list = findByAuthorNameLike(term);
+                break;
+            case "title":
+                list = findByTitleLike(term);
+                break;
+            case "content":
+                list = findByContentLike(term);
+                break;
+            case "subject":
+                list = findBySubjectNameLike(term);
+                break;
+            default:
+                throw new RuntimeException("Parâmetro inválido");
+        }
 
         return list;
     }
 
-    public List<TipFeedDTO> findFeedByUser() {
-        List<TipFeedDTO> list = repository.findByTitle("titulo");
+    private List<Tip> findByAuthorNameLike(String name) {
+        List<User> authors = userService.findByNameLike(name);
 
-        return list;
+        return repository.findByAuthorIn(authors);
+    }
+
+    public List<Tip> findByTitleLike(String title) {
+        return repository.findByTitleLike(title);
+    }
+
+    public List<Tip> findByContentLike(String content) {
+        return repository.findByContentLike(content);
+    }
+
+    public List<Tip> findBySubjectNameLike(String name) {
+        List<Subject> subjects = subjectService.findByNameLike(name);
+
+        return repository.findBySubjectsIn(subjects);
     }
 }

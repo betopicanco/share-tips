@@ -72,4 +72,8 @@ public class UserService {
 
 		return repository.save(entity);
 	}
+
+	public List<User> findByNameLike(String name) {
+ 		return repository.findByNameLike(name);
+	}
 }
