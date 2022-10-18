@@ -1,5 +1,6 @@
 package br.com.sharetips.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -19,6 +20,7 @@ public class Tip implements Serializable{
 	private String title;
 	private String content;
 	@Column(name="created_at")
+	@JsonFormat(pattern = "yyyy/MM/dd")
 	private Date createdAt;
 	@ManyToOne()
 	@JoinColumn(name = "id_user")

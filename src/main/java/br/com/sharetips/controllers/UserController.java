@@ -5,6 +5,7 @@ import java.util.List;
 import br.com.sharetips.entities.dto.user.UserLoggedDTO;
 import br.com.sharetips.entities.dto.user.UserLoginRequestDTO;
 import br.com.sharetips.entities.dto.user.UserRegisterRequestDTO;
+import br.com.sharetips.entities.dto.user.UserUpdateRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,9 +39,15 @@ public class UserController {
 		return ResponseEntity.ok().body(obj);
 	}
 	@PostMapping("/")
-	public ResponseEntity<User> insert(@RequestBody @Valid UserRegisterRequestDTO dto) {
+	public ResponseEntity<User> register(@RequestBody @Valid UserRegisterRequestDTO dto) {
 		User user = service.register(dto);
 		
+		return ResponseEntity.ok().body(user);
+	}
+	@PutMapping("/{id}")
+	public ResponseEntity<User> update(@PathVariable Long id, @RequestBody UserUpdateRequestDTO dto) {
+		User user = service.update(id, dto);
+
 		return ResponseEntity.ok().body(user);
 	}
 	@DeleteMapping("/{id}")
@@ -48,12 +55,5 @@ public class UserController {
 		service.deleteById(id);
 
 		return ResponseEntity.ok().body(null);
-	}
-
-	@PutMapping("/{id}")
-	public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User obj) {
-		obj = service.update(id, obj);
-
-		return ResponseEntity.ok().body(obj);
 	}
 }

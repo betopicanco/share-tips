@@ -7,6 +7,7 @@ import br.com.sharetips.entities.Tip;
 import br.com.sharetips.entities.dto.user.UserLoggedDTO;
 import br.com.sharetips.entities.dto.user.UserLoginRequestDTO;
 import br.com.sharetips.entities.dto.user.UserRegisterRequestDTO;
+import br.com.sharetips.entities.dto.user.UserUpdateRequestDTO;
 import br.com.sharetips.exceptions.BadRequestException;
 import br.com.sharetips.exceptions.ResourceNotFoundException;
 import br.com.sharetips.mappers.UserMapper;
@@ -50,7 +51,6 @@ public class UserService {
 	public UserLoggedDTO login(UserLoginRequestDTO dto) {
 		Optional<UserLoggedDTO> user = repository.findByEmailAndPassword(dto.getEmail(), dto.getPassword());
 
-
 		return user.orElseThrow(() -> new BadRequestException("Email ou senha incorretos"));
 	}
 
@@ -60,16 +60,16 @@ public class UserService {
 
 		if(tips.isEmpty()) {
 			repository.deleteById(id);
+		} else {
+			throw new BadRequestException("This user has tips");
 		}
 	}
 
-	// TODO review endpoint
-	public User update(Long id, User obj) {
-		User entity = repository.getById(id);
+	public User update(Long id, UserUpdateRequestDTO dto) {
+		User entity = findById(id);
 
-		entity.setName(obj.getName());
-		entity.setEmail(obj.getEmail());
-		entity.setPassword(obj.getPassword());
+		entity.setName(dto.getName());
+		entity.setProfission(dto.getProfission());
 
 		return repository.save(entity);
 	}
