@@ -1,9 +1,7 @@
 package br.com.sharetips.controllers;
-
 import br.com.sharetips.entities.Tip;
 import br.com.sharetips.entities.dto.subject.SubjectDTO;
 import br.com.sharetips.entities.dto.tip.TipCreateDTO;
-import br.com.sharetips.entities.dto.tip.TipFeedDTO;
 import br.com.sharetips.services.TipService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,13 +24,14 @@ public class TipController {
         return ResponseEntity.ok().body(list);
     }
 
-    @GetMapping("/feed")
-    private ResponseEntity<List<TipFeedDTO>> findFeedByUser() {
-        List<TipFeedDTO> list = service.findFeedByUser();
+    @GetMapping("/{id}")
+    private ResponseEntity<Tip> findById(@PathVariable Long id) {
+        Tip obj = service.findById(id);
 
-        return ResponseEntity.ok().body(list);
+        return ResponseEntity.ok().body(obj);
     }
 
+    // TODO check if term accept 2 or more words
     @GetMapping("/search")
     private ResponseEntity<List<Tip>> findByParamAndTerm(
             @RequestParam String param,
@@ -43,30 +42,22 @@ public class TipController {
     }
 
     @GetMapping("/find-by-author/{userId}")
-    private ResponseEntity<List<Tip>> findByAuthor(@PathVariable Long userId) {
-        List<Tip> list = service.findByAuthor(userId);
+    private ResponseEntity<List<Tip>> findByAuthor(@RequestParam Long userId) {
+        List<Tip> list = service.findByAuthorId(userId);
 
         return ResponseEntity.ok().body(list);
     }
 
-    @GetMapping("/find-by-subject")
-    private ResponseEntity<List<Tip>> findBySubjects(@RequestBody SubjectDTO subjectDTO) {
-        List<Tip> list = service.findBySubjects(subjectDTO);
+    @GetMapping("/find-by-subject/{subjectId}")
+    private ResponseEntity<List<Tip>> findBySubjects(@PathVariable Long subjectId) {
+        List<Tip> list = service.findBySubjects(subjectId);
 
         return ResponseEntity.ok().body(list);
     }
 
-    @GetMapping("/{id}")
-    private ResponseEntity<Tip> findById(@PathVariable Long id) {
-        Tip obj = service.findById(id);
-
-        return ResponseEntity.ok().body(obj);
-    }
-
-    // TODO check endpoint
     @PostMapping("/")
     private ResponseEntity<Tip> insert(@RequestBody @Valid TipCreateDTO dto) {
-        Tip tip = service.save(dto);
+        Tip tip = service.saveFromDTO(dto);
 
         return ResponseEntity.ok().body(tip);
     }
