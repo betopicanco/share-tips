@@ -71,16 +71,20 @@ public class TipService {
         return repository.save(tip);
     }
 
-    public Tip addSubject(Long id, SubjectDTO subjectDTO) {
+    public Tip addSubjects(Long id, List<SubjectDTO> subjects) {
         Tip tip = findById(id);
-        Optional<Subject> subject = subjectRepository.findByName(subjectDTO.getName());
 
-        if(subject.isPresent()) {
-            tip.addSubject(subject.get());
-        } else {
-            Subject newSubject = subjectRepository.save(SubjectMapper.INSTANCE.toSubject(subjectDTO));
-            tip.addSubject(newSubject);
-        }
+        subjects.forEach((sub) -> {
+            Optional<Subject> optSub =  subjectRepository.findByName(sub.getName());
+
+            if(optSub.isPresent()) {
+                tip.addSubject(optSub.get());
+            } else {
+                Subject newSubject = SubjectMapper.INSTANCE.toSubject(sub);
+
+                tip.addSubject(subjectRepository.save(newSubject));
+            }
+        });
 
         return repository.save(tip);
     }

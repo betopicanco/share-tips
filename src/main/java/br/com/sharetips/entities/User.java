@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
@@ -29,4 +30,3 @@ public class User implements Serializable{
 	private String password;
 	private String profission;
 }
- 

@@ -77,8 +77,8 @@ public class TipController {
     }
 
     @PutMapping("/{id}/add-subject")
-    private ResponseEntity<Tip> addSubject(@PathVariable Long id, @RequestBody @Valid SubjectDTO subjectDTO) {
-        Tip tip = service.addSubject(id, subjectDTO);
+    private ResponseEntity<Tip> addSubject(@PathVariable Long id, @RequestBody @Valid List<SubjectDTO> subjects) {
+        Tip tip = service.addSubjects(id, subjects);
 
         return ResponseEntity.ok().body(tip);
     }
