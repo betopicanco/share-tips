@@ -2,10 +2,12 @@ package br.com.sharetips.controllers;
 
 import java.util.List;
 
+import br.com.sharetips.entities.dto.subject.SubjectDTO;
 import br.com.sharetips.entities.dto.user.UserLoggedDTO;
 import br.com.sharetips.entities.dto.user.UserLoginRequestDTO;
 import br.com.sharetips.entities.dto.user.UserRegisterRequestDTO;
 import br.com.sharetips.entities.dto.user.UserUpdateRequestDTO;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -50,6 +52,16 @@ public class UserController {
 
 		return ResponseEntity.ok().body(user);
 	}
+
+	@PutMapping("/{id}/add-favorite-subject")
+	public ResponseEntity<User> addFavoriteSubjects(
+			@PathVariable Long id,
+			@RequestBody @Valid List<SubjectDTO> subjectDTO) {
+		User user = service.addFavoriteSubject(id,subjectDTO);
+
+		return ResponseEntity.ok().body(user);
+	}
+
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 		service.deleteById(id);

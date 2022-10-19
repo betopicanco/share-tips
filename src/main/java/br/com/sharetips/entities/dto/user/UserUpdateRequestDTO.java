@@ -16,5 +16,5 @@ import javax.validation.constraints.Size;
 public class UserUpdateRequestDTO {
     @NotEmpty
     private String name;
-    private String profission;
+    private String profession;
 }

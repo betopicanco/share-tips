@@ -3,7 +3,9 @@ package br.com.sharetips.services;
 import java.util.List;
 import java.util.Optional;
 
+import br.com.sharetips.entities.Subject;
 import br.com.sharetips.entities.Tip;
+import br.com.sharetips.entities.dto.subject.SubjectDTO;
 import br.com.sharetips.entities.dto.user.UserLoggedDTO;
 import br.com.sharetips.entities.dto.user.UserLoginRequestDTO;
 import br.com.sharetips.entities.dto.user.UserRegisterRequestDTO;
@@ -11,6 +13,7 @@ import br.com.sharetips.entities.dto.user.UserUpdateRequestDTO;
 import br.com.sharetips.exceptions.BadRequestException;
 import br.com.sharetips.exceptions.ResourceNotFoundException;
 import br.com.sharetips.mappers.UserMapper;
+import br.com.sharetips.repositories.SubjectRepository;
 import br.com.sharetips.repositories.TipRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +28,9 @@ public class UserService {
 
 	@Autowired
 	private TipRepository tipRepository;
+
+	@Autowired
+	private SubjectRepository subjectRepository;
 	
 	public List<User> findAll() {
 		return repository.findAll();
@@ -69,12 +75,30 @@ public class UserService {
 		User entity = findById(id);
 
 		entity.setName(dto.getName());
-		entity.setProfission(dto.getProfission());
+		entity.setProfession(dto.getProfession());
 
 		return repository.save(entity);
 	}
 
 	public List<User> findByNameLike(String name) {
  		return repository.findByNameLike(name);
+	}
+
+
+	public User addFavoriteSubject(Long id, List<SubjectDTO> subjects) {
+		User user = findById(id);
+
+		subjects.forEach((subDTO -> {
+			String name = subDTO.getName();
+			Optional<Subject> subject = subjectRepository.findByName(name);
+
+			if(subject.isEmpty()) {
+				throw new ResourceNotFoundException("Some subject do not exists");
+			}
+
+			user.addFavoriteSubjects(subject.get());
+		}));
+
+		return repository.save(user);
 	}
 }

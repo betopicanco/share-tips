@@ -7,12 +7,9 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Data
 @AllArgsConstructor
@@ -28,5 +25,19 @@ public class User implements Serializable{
 	private String name;
 	private String email;
 	private String password;
-	private String profission;
+	private String profession;
+	@ManyToMany
+	@JoinTable(
+			name = "tb_user_subject",
+			joinColumns = @JoinColumn(name = "user_id"),
+			inverseJoinColumns = @JoinColumn(name = "subject_id"))
+	private Set<Subject> favoriteSubjects;
+
+	public Set<Subject> getFavoriteSubjects() {
+		return favoriteSubjects;
+	}
+
+	public void addFavoriteSubjects(Subject subject) {
+		favoriteSubjects.add(subject);
+	}
 }
