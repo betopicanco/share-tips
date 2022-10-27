@@ -38,6 +38,7 @@ public class TipService {
         return obj.orElseThrow(() -> new ResourceNotFoundException("Tip not found"));
     }
 
+    // Salva uma nova dica a partir de um DTO
     public Tip saveFromDTO(TipCreateDTO dto) {
         User author = userRepository.findById(dto.getAuthorId()).orElseThrow(
                 () -> new ResourceNotFoundException("Author not found")
@@ -71,6 +72,7 @@ public class TipService {
         return repository.save(tip);
     }
 
+    // Adiciona uma lista de assuntos a uma dica
     public Tip addSubjects(Long id, List<SubjectDTO> subjects) {
         Tip tip = findById(id);
 
@@ -89,10 +91,12 @@ public class TipService {
         return repository.save(tip);
     }
 
+    // Busca uma lista de dicas pelo id de um author
     public List<Tip> findByAuthorId(Long authorId) {
         return repository.findByAuthorId(authorId);
     }
 
+    // Busca por parametro e termo
     public List<Tip> findByParamAndTerm(String param, String term) {
         List<Tip> list;
         term = "%" + term + "%";
@@ -117,22 +121,27 @@ public class TipService {
         return list;
     }
 
+    // Busca pelo nome do author semelhante
     private List<Tip> findByAuthorNameLike(String name) {
         return repository.findByAuthorNameLike(name);
     }
 
+    // Busca por titulo semelhante
     public List<Tip> findByTitleLike(String title) {
         return repository.findByTitleLike(title);
     }
 
+    // Busca por conteúdo semelhante
     public List<Tip> findByContentLike(String content) {
         return repository.findByContentLike(content);
     }
 
+    // Busca por assunto semelhante
     public List<Tip> findBySubjectNameLike(String subjectName) {
         return repository.findBySubjectNameLike(subjectName);
     }
 
+    // Busca por assunto
     public List<Tip> findBySubjects(Long subjectId) {
         return repository.findBySubjectId(subjectId);
     }
