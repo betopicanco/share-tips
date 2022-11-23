@@ -54,8 +54,8 @@ public class UserService {
 		}
 	}
 
-	public UserLoggedDTO login(UserLoginRequestDTO dto) {
-		Optional<UserLoggedDTO> user = repository.findByEmailAndPassword(dto.getEmail(), dto.getPassword());
+	public UserLoggedDTO login(String email, String password) {
+		Optional<UserLoggedDTO> user = repository.findByEmailAndPassword(email, password);
 
 		return user.orElseThrow(() -> new BadRequestException("Email ou senha incorretos"));
 	}

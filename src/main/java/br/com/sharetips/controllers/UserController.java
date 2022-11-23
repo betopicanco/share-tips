@@ -35,9 +35,8 @@ public class UserController {
 		return ResponseEntity.ok().body(obj);
 	}
 	@GetMapping("/login")
-	public ResponseEntity<UserLoggedDTO> login(@RequestBody UserLoginRequestDTO dto) {
-		UserLoggedDTO obj = service.login(dto);
-
+	public ResponseEntity<UserLoggedDTO> login(@RequestParam String email, @RequestParam String password) {
+		UserLoggedDTO obj = service.login(email, password);
 		return ResponseEntity.ok().body(obj);
 	}
 	@PostMapping("/")
