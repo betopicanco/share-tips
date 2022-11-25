@@ -28,4 +28,8 @@ public class SubjectService {
     public List<Subject> findByNameLike(String name) {
         return subjectRepository.findByNameLike(name);
     }
+
+    public List<Subject> findMostPopular() {
+        return subjectRepository.findMostPopular();
+    }
 }

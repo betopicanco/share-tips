@@ -23,4 +23,11 @@ public class SubjectController {
 
         return ResponseEntity.ok().body(subjects);
     }
+
+    @GetMapping("/most-popular")
+    public ResponseEntity<List<Subject>> findMostPopular() {
+        List<Subject> subjects = subjectService.findMostPopular();
+
+        return ResponseEntity.ok().body(subjects);
+    }
 }
