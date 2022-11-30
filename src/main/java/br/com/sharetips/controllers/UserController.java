@@ -52,7 +52,7 @@ public class UserController {
 		return ResponseEntity.ok().body(user);
 	}
 
-	@PutMapping("/{id}/add-favorite-subject")
+	@PutMapping("/{id}/add-favorite-subjects")
 	public ResponseEntity<User> addFavoriteSubjects(
 			@PathVariable Long id,
 			@RequestBody @Valid List<SubjectDTO> subjectDTO) {
